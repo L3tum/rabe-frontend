@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import {Stylesheets} from '../components/stylesheets';
 import {Scripts} from '../components/scripts';
 
 export default class Login extends React.Component {
