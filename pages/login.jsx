@@ -1,53 +1,87 @@
 import React from 'react';
-import Head from 'next/head';
-import { Scripts } from '../components/scripts';
-import Nav from '../components/nav';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import withBasics from '../components/HOC/withBasics';
+import { authenticate } from '../store/auth/actions';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.login = this.login.bind(this);
+  }
+
+  login() {
+    const { props } = this;
+
+    const data = {
+      email: this.email.value,
+      password: this.password.value,
+    };
+
+    props.authenticate(data);
+  }
+
   render() {
-    const emailKey = 'email';
+    const { auth } = this.props;
+
     return (
-      <>
-        <Head>
-          <title>Rabe - Login</title>
-          <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-            crossOrigin="anonymous"
-          />
-        </Head>
-        <Nav />
-        <div className="container">
-          <div className="row justify-content-center align-items-center ">
-            <div className="col-6">
-              <div className="card mt-lg-5 mt-2">
-                <div className="card-header bg-dark text-white">
+      <div className="container">
+        <div className="row justify-content-center align-items-center ">
+          <div className="col-lg-6 col-md-8 col-sm-12">
+            <div className="card mt-lg-5 mt-2">
+              <div className="card-header bg-dark text-white">
                   Login
-                </div>
-                <div className="card-body">
-                  <div className="form-group">
-                    <label className="w-100" htmlFor="email">
+              </div>
+              <div className="card-body">
+                <div className="form-group">
+                  <label className="w-100" htmlFor="email">
                       E-Mail
-                      <input id="email" className="form-control" ref={(email) => this.email === email} />
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="w-100" htmlFor="password">
+                    <input id="email" className="form-control" ref={(email) => { this.email = email; }} />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label className="w-100" htmlFor="password">
                       Passwort
-                      <input id="password" className="form-control" type="password" ref={(password) => this.password = password} />
-                    </label>
-                  </div>
+                    <input id="password" className="form-control" type="password" ref={(password) => { this.password = password; }} />
+                  </label>
                 </div>
-                <div className="card-footer d-flex justify-content-end">
-                  <button type="button" className="btn btn-dark">Login</button>
-                </div>
+              </div>
+              <div className="card-footer d-flex justify-content-end">
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  onClick={this.login}
+                >
+                  {auth.isLoading ? 'Lädt' : 'Login'}
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <Scripts />
-      </>
+      </div>
     );
   }
 }
+Login.propTypes = {
+  authenticate: PropTypes.func,
+  auth: PropTypes.shape({
+    isLoading: PropTypes.bool,
+  }),
+};
+
+Login.defaultProps = {
+  authenticate: () => ({}),
+  auth: {
+    isLoading: false,
+  },
+};
+
+export default connect(
+  (state) => ({
+    auth: state.auth,
+  }),
+  (dispatch) => ({
+    authenticate: (data) => dispatch(authenticate(data)),
+  }),
+)(withBasics(Login, 'RaBe - Login'));

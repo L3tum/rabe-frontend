@@ -1,22 +1,20 @@
 /* Import external packages */
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 /* Import reducers */
-import { authReducer, authState } from './auth';
+import { authReducer } from './auth';
 
 export const reducers = combineReducers({
   auth: authReducer,
 });
 
-const defaultState = {
-  auth: authState,
-};
 
-export const initializeStore = (initialState = defaultState) => (
+export const initializeStore = () => (
   createStore(
     reducers,
-    initialState,
-    composeWithDevTools(applyMiddleware()),
+    {},
+    composeWithDevTools(applyMiddleware(thunk)),
   )
 );

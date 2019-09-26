@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { Scripts } from '../components/scripts';
+import Scripts from '../components/scripts';
 
 const Home = () => (
   <div>

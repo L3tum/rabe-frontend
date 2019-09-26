@@ -1,26 +1,27 @@
 import { types } from './actions';
 
-export const authState = {
+const defaultState = {
   isLoading: false,
   isAuthenticated: false,
-  passwordChanged: false
+  passwordChanged: false,
 };
 
-export const authReducer = (state = authState, action) => {
-  switch (action.types) {
-    case types.AUTHENTICATION_FAILED:
-      return authState;
-    case types.AUTHENTICATION_SUCCESSFUL:
-      return {
-        isLoading: false,
-        isAuthenticated: true,
-        passwordChanged: action.payload.passwordChanged
-      };
+export const authReducer = (state = defaultState, action) => {
+  switch (action.type) {
     case types.START_AUTHENTICATION:
+      console.log(action);
       return {
         ...state,
         isLoading: true,
       };
+    case types.AUTHENTICATION_SUCCESSFUL:
+      return {
+        isLoading: false,
+        isAuthenticated: true,
+        passwordChanged: action.payload.passwordChanged,
+      };
+    case types.AUTHENTICATION_FAILED:
+      return defaultState;
     default:
       return state;
   }
