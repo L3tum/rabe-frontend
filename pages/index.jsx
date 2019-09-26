@@ -1,57 +1,49 @@
-import React from 'react'
-import Head from 'next/head'
-import {Scripts} from '../components/scripts';
-import {Stylesheets} from '../components/stylesheets';
+import React from 'react';
+import Head from 'next/head';
+import { Scripts } from '../components/scripts';
 
 const Home = () => (
   <div>
     <Head>
       <title>Template-Test</title>
-      <Stylesheets/>
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossOrigin="anonymous"
+      />
     </Head>
     <div className="table">
       <div className="tr">
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button className="low"></button>
+          <button className="low" />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button className="critical"></button>
+          <button className="critical" />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td blackboard bRight">&nbsp;</div>
       </div>
       <div className="tr">
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
-        <div className="td blackboard bRight">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
         <div className="td blackboard bRight">&nbsp;</div>
       </div>
       <div className="tr">
@@ -59,6 +51,18 @@ const Home = () => (
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
+        <div className="td workspace">
+          <button />
+        </div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td blackboard bRight">&nbsp;</div>
+      </div>
+      <div className="tr">
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
@@ -70,7 +74,7 @@ const Home = () => (
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
@@ -78,39 +82,41 @@ const Home = () => (
       </div>
       <div className="tr">
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
       </div>
       <div className="tr">
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
       </div>
     </div>
 
-    <br/><br/><br/>
+    <br />
+    <br />
+    <br />
 
     <div className="table">
       <div className="tr">
@@ -123,7 +129,7 @@ const Home = () => (
       <div className="tr">
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
@@ -131,67 +137,68 @@ const Home = () => (
       </div>
       <div className="tr">
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td workspace">
-          <button></button>
-        </div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td workspace">
-          <button></button>
-        </div>
-        <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
       </div>
       <div className="tr">
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
         </div>
         <div className="td">&nbsp;</div>
         <div className="td">&nbsp;</div>
         <div className="td workspace">
-          <button></button>
+          <button />
+        </div>
+        <div className="td">&nbsp;</div>
+      </div>
+      <div className="tr">
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+      </div>
+      <div className="tr">
+        <div className="td workspace">
+          <button />
+        </div>
+        <div className="td workspace">
+          <button />
+        </div>
+        <div className="td">&nbsp;</div>
+        <div className="td workspace">
+          <button />
+        </div>
+        <div className="td workspace">
+          <button />
+        </div>
+      </div>
+      <div className="tr">
+        <div className="td">&nbsp;</div>
+        <div className="td workspace">
+          <button />
+        </div>
+        <div className="td">&nbsp;</div>
+        <div className="td">&nbsp;</div>
+        <div className="td workspace">
+          <button />
         </div>
         <div className="td">&nbsp;</div>
       </div>
     </div>
-    <style jsx>{`
+    <style jsx>
+      {`
         * {
         margin: 0;
         padding: 0;
@@ -228,9 +235,10 @@ const Home = () => (
         .blackboard.bRight {
         border - right: 2px solid green;
       }
-      `}</style>
-    <Scripts/>
+      `}
+    </style>
+    <Scripts />
   </div>
 );
 
-export default Home
+export default Home;
