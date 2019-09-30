@@ -8,6 +8,7 @@ export const types = {
   LOGOUT_FAILED: '@@AUTH/LOGOUT_FAILED',
   CHANGE_PASSWORD_SUCCESS: '@@AUTH/CHANGE_PASSWORD_SUCCESS',
   CHANGE_PASSWORD_FAILED: '@@AUTH/CHANGE_PASSWORD_FAILED',
+  BLOCK_TEACHER: '@@AUTH/BLOCK_TEACHER_SUCCESS'
 };
 
 const startAuthentication = () => ({
@@ -33,12 +34,14 @@ const changePasswordSuccessful = () => ({
 const changePasswordFailed = () => ({
   type: types.CHANGE_PASSWORD_FAILED,
 });
+const blockTeacherAction = () => ({
+  type: types.BLOCK_TEACHER,
+});
 
 export const authenticate = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
   return axios.post(`${process.env.BACKEND}/api/login`, data).then((response) => {
-    console.log(response);
     dispatch(authenticationSuccessful(response.data));
     return response;
   }).catch((error) => {
@@ -69,4 +72,8 @@ export const changePassword = (data) => (dispatch) => {
     dispatch(changePasswordFailed());
     throw error;
   });
+};
+
+export const blockTeacher = () => (dispatch) => {
+    dispatch(blockTeacherAction());
 };

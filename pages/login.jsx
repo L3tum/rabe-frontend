@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 
 import withBasics from '../components/HOC/withBasics';
-import { authenticate } from '../store/auth/actions';
+import * as authActions from '../store/auth/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,11 +15,29 @@ class Login extends React.Component {
     this.state = {
       error: '',
       wrongPassword: 0,
+      showPage: false,
     };
   }
 
+  componentDidMount() {
+    const { auth, router } = this.props;
+
+    if (auth.isAuthenticated) {
+      router.push('/rooms');
+    } else {
+      this.setState({
+        showPage: true,
+      });
+    }
+    if (auth.isBlocked) {
+      this.setState({
+        error: 'Ihr Account wurde auf Grund zu vieler fehlgeschlagener Login Versuche gesperrt. Bitte wenden Sie einen Administrator',
+      });
+    }
+  }
+
   login() {
-    const { props } = this;
+    const { authenticate, router, blockTeacher } = this.props;
 
     if (this.email.value.length > 0 && this.password.value.length > 0) {
       const data = {
@@ -28,20 +46,28 @@ class Login extends React.Component {
       };
       const { wrongPassword } = this.state;
 
-      props.authenticate(data)
+      authenticate(data)
         .then((response) => {
           if (!response.data.passwordGeaendert) {
-            props.router.push('/reset-password');
-            return;
+            router.push('/reset-password');
+          } else {
+            router.push('/rooms');
           }
-          props.router.push('/rooms');
         })
         .catch((error) => {
-          if (error.response.code === 401) {
-            this.setState({
-              wrongPassword: wrongPassword + 1,
-              error: 'Benutzerdaten falsch',
-            });
+          if (error.response.status === 401) {
+            const newValue = wrongPassword + 1;
+            if (newValue === 3) {
+              blockTeacher();
+              this.setState({
+                error: 'Ihr Account wurde auf Grund zu vieler fehlgeschlagener Login Versuche gesperrt. Bitte wenden Sie sich an einen Administrator',
+              });
+            } else {
+              this.setState({
+                wrongPassword: newValue,
+                error: `Benutzerdaten falsch noch ${3 - newValue} Versuche.`,
+              });
+            }
           } else {
             this.setState({
               error: 'Beim Anmelden ist ein Fehler aufgetretten.',
@@ -57,7 +83,11 @@ class Login extends React.Component {
 
   render() {
     const { auth } = this.props;
-    const { error } = this.state;
+    const { error, showPage } = this.state;
+
+    if (!showPage) {
+      return <div />;
+    }
 
     return (
       <div className="container">
@@ -89,6 +119,7 @@ class Login extends React.Component {
                           this.login();
                         }
                       }}
+                      disabled={auth.isBlocked}
                     />
                   </label>
                 </div>
@@ -105,6 +136,7 @@ class Login extends React.Component {
                           this.login();
                         }
                       }}
+                      disabled={auth.isBlocked}
                     />
                   </label>
                 </div>
@@ -114,6 +146,7 @@ class Login extends React.Component {
                   type="button"
                   className="btn btn-dark"
                   onClick={this.login}
+                  disabled={auth.isBlocked}
                 >
                   {auth.isLoading ? 'Lädt...' : 'Anmelden'}
                 </button>
@@ -129,17 +162,24 @@ Login.propTypes = {
   authenticate: PropTypes.func,
   auth: PropTypes.shape({
     isLoading: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
+    isBlocked: PropTypes.bool,
   }),
+  blockTeacher: PropTypes.func,
   router: PropTypes.shape({
     push: PropTypes.func,
   }),
 };
 
+
 Login.defaultProps = {
   authenticate: () => ({}),
   auth: {
     isLoading: false,
+    isBlocked: false,
+    isAuthenticated: false,
   },
+  blockTeacher: () => ({}),
   router: {
     push: () => ({}),
   },
@@ -150,6 +190,7 @@ export default connect(
     auth: state.auth,
   }),
   (dispatch) => ({
-    authenticate: (data) => dispatch(authenticate(data)),
+    authenticate: (data) => dispatch(authActions.authenticate(data)),
+    blockTeacher: () => dispatch(authActions.blockTeacher()),
   }),
 )(withBasics(withRouter(Login), 'RaBe - Login'));
