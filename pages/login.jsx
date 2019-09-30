@@ -60,8 +60,9 @@ class Login extends React.Component {
           }
         })
         .catch((error) => {
-          const { status } = error.response;
-          if (status === 401) {
+          // const { status } = error.response;
+          console.log(error);
+          if (error.response.status === 401) {
             const newValue = wrongPassword + 1;
             if (newValue === 3) {
               blockTeacher();
@@ -74,7 +75,7 @@ class Login extends React.Component {
                 error: 'Benutzerdaten falsch.',
               });
             }
-          } if (status === 404) {
+          } if (error.response.status === 404) {
             this.setState({
               error: 'Benutzerdaten falsch.',
             });
