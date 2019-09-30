@@ -42,10 +42,11 @@ class Login extends React.Component {
               wrongPassword: wrongPassword + 1,
               error: 'Benutzerdaten falsch',
             });
+          } else {
+            this.setState({
+              error: 'Beim Anmelden ist ein Fehler aufgetretten.',
+            });
           }
-          this.setState({
-            error: 'Beim Anmelden ist ein Fehler aufgetretten.',
-          });
         });
     } else {
       this.setState({

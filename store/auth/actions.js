@@ -37,7 +37,7 @@ const changePasswordFailed = () => ({
 export const authenticate = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post(`${publicRuntimeConfig.backend}/api/login`, data).then((response) => {
+  return axios.post(`${process.env.BACKEND}/api/login`, data).then((response) => {
     console.log(response);
     dispatch(authenticationSuccessful(response.data));
     return response;
@@ -62,7 +62,7 @@ export const logout = () => (dispatch) => {
 export const changePassword = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post(`${publicRuntimeConfig.backend}/api/login/changePassword`, data).then((response) => {
+  return axios.post(`${process.env.BACKEND}/api/login/changePassword`, data).then((response) => {
     dispatch(changePasswordSuccessful());
     return response;
   }).catch((error) => {
