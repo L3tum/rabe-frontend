@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import withBasics from '../components/HOC/withBasics';
 import * as authActions from '../store/auth/actions';
+import Spinner from '../components/spinner';
 
 class ResetPassword extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class ResetPassword extends React.Component {
 
   changePassword() {
     const { password, passwordRepeat, oldPassword } = this;
-    const { changePassword } = this.props;
+    const { changePassword, router } = this.props;
     const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 
     this.setState({
@@ -48,7 +49,19 @@ class ResetPassword extends React.Component {
         error: 'Passwort entspricht nicht den Mindestanforderungen',
       });
     } else {
-      changePassword({ newPassword: password.value, oldPassword: oldPassword.value });
+      changePassword({ newPassword: password.value, oldPassword: oldPassword.value }).then(() => {
+        router.push('/rooms');
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          this.setState({
+            error: 'Ihr altes Passwort ist inkorrekt',
+          });
+        } else {
+          this.setState({
+            error: 'Es ist ein Fehler aufgetretten',
+          });
+        }
+      });
     }
   }
 
@@ -56,7 +69,7 @@ class ResetPassword extends React.Component {
     const { error, showPage } = this.state;
 
     if (!showPage) {
-      return <div />;
+      return <Spinner />;
     }
 
     return (

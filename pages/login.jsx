@@ -5,6 +5,7 @@ import { withRouter } from 'next/router';
 
 import withBasics from '../components/HOC/withBasics';
 import * as authActions from '../store/auth/actions';
+import Spinner from '../components/spinner';
 
 class Login extends React.Component {
   constructor(props) {
@@ -95,7 +96,7 @@ class Login extends React.Component {
     const { error, showPage } = this.state;
 
     if (!showPage) {
-      return <div />;
+      return <Spinner />;
     }
 
     return (

@@ -4,17 +4,37 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import withBasics from '../components/HOC/withBasics';
+import Spinner from '../components/spinner';
 
 class Index extends React.Component {
-  componentDidMount() {
-    const { props } = this;
+  constructor(props) {
+    super(props);
 
-    if (props.auth.isAuthenticated) {
-      props.router.push('/rooms');
+    this.state = {
+      showPage: false,
+    };
+  }
+
+
+  componentDidMount() {
+    const { auth, router } = this.props;
+
+    if (auth.isAuthenticated) {
+      router.push('/rooms');
+    } else {
+      this.setState({
+        showPage: true,
+      });
     }
   }
 
   render() {
+    const { showPage } = this.state;
+
+    if (!showPage) {
+      return <Spinner />;
+    }
+
     return (
       <div className="container">
         <div className="row">
