@@ -51,10 +51,10 @@ export const authenticate = (data) => (dispatch) => {
   });
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => (dispatch, getState) => {
   dispatch(startAuthentication());
 
-  return axios.post(`${process.env.BACKEND}/api/login/logout`).then((response) => {
+  return axios.post(`${process.env.BACKEND}/api/login/logout`, { headers: { Authorization: `Bearer ${getState().auth.token}` }}).then((response) => {
     dispatch(logoutSuccessful());
     return response;
   }).catch((error) => {
@@ -63,10 +63,12 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const changePassword = (data) => (dispatch) => {
+export const changePassword = (data) => (dispatch, getState) => {
   dispatch(startAuthentication());
 
-  return axios.post(`${process.env.BACKEND}/api/login/changePassword`, data).then((response) => {
+  console.log(getState());
+
+  return axios.post(`${process.env.BACKEND}/api/login/changePassword`, data, { headers: { Authorization: `Bearer ${getState().auth.token}` }}).then((response) => {
     dispatch(changePasswordSuccessful());
     return response;
   }).catch((error) => {
