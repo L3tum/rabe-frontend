@@ -20,4 +20,3 @@ class Teachers extends React.Component {
 }
 
 export default withBasics(Teachers, 'RaBe - Admin - Lehrerverwaltung');
-

@@ -20,4 +20,3 @@ class Rooms extends React.Component {
 }
 
 export default withBasics(Rooms, 'RaBe - Admin - Raumverwaltung');
-

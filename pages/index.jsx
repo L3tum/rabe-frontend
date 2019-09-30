@@ -1,8 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { withRouter } from 'next/router';
 import withBasics from '../components/HOC/withBasics';
 
 class Index extends React.Component {
+  componentDidMount() {
+    const { props } = this;
+
+    if (props.auth.isAuthenticated) {
+      props.router.push('/rooms');
+    }
+  }
+
   render() {
     return (
       <div className="container">
@@ -41,4 +52,26 @@ class Index extends React.Component {
   }
 }
 
-export default withBasics(Index, 'RaBe - Willkommen');
+Index.propTypes = {
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool,
+  }),
+  router: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+};
+
+Index.defaultProps = {
+  auth: {
+    isAuthenticated: false,
+  },
+  router: {
+    push: () => ({}),
+  },
+};
+
+export default connect(
+  (state) => ({
+    auth: state.auth,
+  }),
+)(withBasics(withRouter(Index), 'RaBe - Willkommen'));

@@ -22,7 +22,6 @@ class Login extends React.Component {
     const { props } = this;
 
     if (this.email.value.length > 0 && this.password.value.length > 0) {
-
       const data = {
         email: this.email.value,
         password: this.password.value,
@@ -150,6 +149,6 @@ export default connect(
     auth: state.auth,
   }),
   (dispatch) => ({
-    authenticate: (data) => dispatch(authenticate(data))
+    authenticate: (data) => dispatch(authenticate(data)),
   }),
 )(withBasics(withRouter(Login), 'RaBe - Login'));
