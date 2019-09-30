@@ -1,4 +1,6 @@
 import axios from 'axios';
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 
 export const types = {
   START_AUTHENTICATION: '@@AUTH/START_AUTHENTICATION',
@@ -29,7 +31,7 @@ const logoutFailed = () => ({
 export const authenticate = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post('https://rabe-backend.herokuapp.com/api/login', data).then((response) => {
+  return axios.post(publicRuntimeConfig.backend + '/api/login', data).then((response) => {
     console.log(response);
     dispatch(authenticationSuccessful(response.data));
     return response;
@@ -43,7 +45,7 @@ export const authenticate = (data) => (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post('https://rabe-backend.herokuapp.com/api/login/logout').then((response) => {
+  return axios.post(publicRuntimeConfig.backend + '/api/login/logout').then((response) => {
     dispatch(logoutSuccessful());
     return response;
   }).catch((error) => {
