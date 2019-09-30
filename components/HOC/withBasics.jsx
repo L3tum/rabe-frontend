@@ -15,6 +15,9 @@ const withBasics = (Component, title) => class extends React.Component {
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossOrigin="anonymous"
           />
+          <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet" />
+          <link rel="icon" type="image/x-icon" href="../static/favicon.ico" />
+          <link rel="stylesheet" href="../static/rabe.css" />
         </Head>
         <Nav />
         <Component {...this.props} />

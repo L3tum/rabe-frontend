@@ -1,244 +1,44 @@
 import React from 'react';
-import Head from 'next/head';
-import Scripts from '../components/scripts';
+import Link from 'next/link';
+import withBasics from '../components/HOC/withBasics';
 
-const Home = () => (
-  <div>
-    <Head>
-      <title>Template-Test</title>
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossOrigin="anonymous"
-      />
-    </Head>
-    <div className="table">
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button className="low" />
+class Index extends React.Component {
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <p className="display-4 text-center text-muted mt-5">
+              Willkommen zum Raum-Betreuungs Tool
+              <br />
+              <span className="display-2 font-weight-bolder text-dark rabe-logo">
+              RaBe
+              </span>
+            </p>
+            <div className="text-center">
+              <img src="/static/favicon.ico" />
+            </div>
+            <h5 className="text-center text-muted mt-3">
+              Mit diesem Tool können Sie Probleme an Arbeitsplätzen in Räumen verwalten.
+              <br />
+              Sie können bestehende Fehler einsehen und neue Fehler eintragen.
+              <br />
+              Diese Fehler werden dann an den entsprechenden Betreuer weitergeleitet
+            </h5>
+            <div className="row justify-content-center mt-3">
+              <div className="col-12 col-md-6">
+                <Link href="/login">
+                  <button type="button" className="btn btn-dark btn-block btn-lg">
+                    Einloggen
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button className="critical" />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td blackboard bRight">&nbsp;</div>
       </div>
-      <div className="tr">
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td blackboard bRight">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td blackboard bRight">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-    </div>
+    );
+  }
+}
 
-    <br />
-    <br />
-    <br />
-
-    <div className="table">
-      <div className="tr">
-        <div className="td">T</div>
-        <div className="td">T</div>
-        <div className="td">T</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td workspace">
-          <button />
-        </div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-      </div>
-      <div className="tr">
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td workspace">
-          <button />
-        </div>
-      </div>
-      <div className="tr">
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-        <div className="td">&nbsp;</div>
-        <div className="td workspace">
-          <button />
-        </div>
-        <div className="td">&nbsp;</div>
-      </div>
-    </div>
-    <style jsx>
-      {`
-        * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-        .workspace {
-
-      }
-        .table {
-
-      }
-        .tr {
-
-      }
-        .td {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        padding: 2px;
-      }
-        .td > button {
-        width: 36px;
-        height: 36px;
-        background-color: lime;
-        border: 1px solid black;
-        border-radius: 4px;
-      }
-        button.low {
-        background - color: yellow;
-      }
-        button.critical {
-        background - color: red;
-      }
-        .blackboard.bRight {
-        border - right: 2px solid green;
-      }
-      `}
-    </style>
-    <Scripts />
-  </div>
-);
-
-export default Home;
+export default withBasics(Index, 'RaBe - Willkommen');

@@ -2,6 +2,10 @@ import React from 'react';
 import withBasics from '../../components/HOC/withBasics';
 
 class Rooms extends React.Component {
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <div className="container">
@@ -16,3 +20,4 @@ class Rooms extends React.Component {
 }
 
 export default withBasics(Rooms);
+

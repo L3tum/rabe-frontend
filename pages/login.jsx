@@ -9,41 +9,89 @@ class Login extends React.Component {
     super(props);
 
     this.login = this.login.bind(this);
+
+    this.state = {
+      error: '',
+    };
   }
 
   login() {
     const { props } = this;
 
-    const data = {
-      email: this.email.value,
-      password: this.password.value,
-    };
+    if (this.email.value.length > 0 && this.password.value.length > 0) {
 
-    props.authenticate(data);
+      const data = {
+        email: this.email.value,
+        password: this.password.value,
+      };
+
+      props.authenticate(data)
+        .then(() => {
+          console.log('Logged In');
+        })
+        .catch(() => {
+          this.setState({
+            error: 'Beim Anmelden ist ein Fehler aufgetretten.',
+          });
+        });
+    } else {
+      this.setState({
+        error: 'Bitten füllen sie die die Felder aus.',
+      });
+    }
   }
 
   render() {
     const { auth } = this.props;
+    const { error } = this.state;
 
     return (
       <div className="container">
-        <div className="row justify-content-center align-items-center ">
+        {error.length > 0 && (
+          <div className="row justify-content-center">
+            <div className="col-lg-6 col-md-8 col-sm-10 col-12">
+              <div className="alert alert-danger">
+                {error}
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="row justify-content-center align-items-center">
           <div className="col-lg-6 col-md-8 col-sm-12">
-            <div className="card mt-lg-5 mt-2">
+            <div className="card">
               <div className="card-header bg-dark text-white">
-                  Login
+                  Anmelden
               </div>
               <div className="card-body">
                 <div className="form-group">
                   <label className="w-100" htmlFor="email">
-                      E-Mail
-                    <input id="email" className="form-control" ref={(email) => { this.email = email; }} />
+                        E-Mail
+                    <input
+                      id="email"
+                      className="form-control"
+                      ref={(email) => { this.email = email; }}
+                      onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                          this.login();
+                        }
+                      }}
+                    />
                   </label>
                 </div>
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
-                      Passwort
-                    <input id="password" className="form-control" type="password" ref={(password) => { this.password = password; }} />
+                        Passwort
+                    <input
+                      id="password"
+                      className="form-control"
+                      type="password"
+                      ref={(password) => { this.password = password; }}
+                      onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                          this.login();
+                        }
+                      }}
+                    />
                   </label>
                 </div>
               </div>
@@ -53,7 +101,7 @@ class Login extends React.Component {
                   className="btn btn-dark"
                   onClick={this.login}
                 >
-                  {auth.isLoading ? 'Lädt' : 'Login'}
+                  {auth.isLoading ? 'Lädt...' : 'Anmelden'}
                 </button>
               </div>
             </div>

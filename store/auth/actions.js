@@ -21,11 +21,12 @@ export const authenticationFailed = () => ({
 export const authenticate = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
-  axios.post('/api/login', data).then((response) => {
+  return axios.post('https://rabe-backend.herokuapp.com/api/login', data).then((response) => {
+    console.log(response);
     dispatch(authenticationSuccessful(response.data.data));
-    return response.data.data;
+    return response;
   }).catch((error) => {
     dispatch(authenticationFailed());
-    throw error.data.data;
+    throw error;
   });
 };

@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Link from 'next/link';
 
 const Nav = (props) => {
   const { auth } = props;
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
-      <a className="navbar-brand" href="#">RaBe</a>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-lg-5 mb-3">
+      <Link href="/">
+        <a className="navbar-brand rabe-logo mb-0">RaBe</a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"

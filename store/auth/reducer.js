@@ -9,7 +9,6 @@ const defaultState = {
 export const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case types.START_AUTHENTICATION:
-      console.log(action);
       return {
         ...state,
         isLoading: true,
