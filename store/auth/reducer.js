@@ -6,6 +6,7 @@ const defaultState = {
   passwordChanged: false,
   isAdmin: false,
   isBlocked: false,
+  token: null
 };
 
 const authReducer = (state = defaultState, action) => {
@@ -23,6 +24,7 @@ const authReducer = (state = defaultState, action) => {
         passwordChanged: !!action.payload.passwordGeaendert,
         isAdmin: !!action.payload.administrator,
         isBlocked: !!action.payload.blocked,
+        token: action.payload.token
       };
     case types.CHANGE_PASSWORD_SUCCESS:
       return {
