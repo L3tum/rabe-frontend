@@ -39,6 +39,10 @@ class Login extends React.Component {
   login() {
     const { authenticate, router, blockTeacher } = this.props;
 
+    this.setState({
+      error: '',
+    });
+
     if (this.email.value.length > 0 && this.password.value.length > 0) {
       const data = {
         email: this.email.value,
@@ -55,7 +59,8 @@ class Login extends React.Component {
           }
         })
         .catch((error) => {
-          if (error.response.status === 401) {
+          const { status } = error.response;
+          if (status === 401) {
             const newValue = wrongPassword + 1;
             if (newValue === 3) {
               blockTeacher();
@@ -65,9 +70,13 @@ class Login extends React.Component {
             } else {
               this.setState({
                 wrongPassword: newValue,
-                error: `Benutzerdaten falsch noch ${3 - newValue} Versuche.`,
+                error: 'Benutzerdaten falsch.',
               });
             }
+          } if (status === 404) {
+            this.setState({
+              error: 'Benutzerdaten falsch.',
+            });
           } else {
             this.setState({
               error: 'Beim Anmelden ist ein Fehler aufgetretten.',

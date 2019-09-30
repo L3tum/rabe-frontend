@@ -35,6 +35,10 @@ class ResetPassword extends React.Component {
     const { changePassword } = this.props;
     const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 
+    this.setState({
+      error: '',
+    });
+
     if (password.value !== passwordRepeat.value) {
       this.setState({
         error: 'Passwörter stimmen nicht überein',
