@@ -9,7 +9,7 @@ const Nav = (props) => {
   const { auth, logout } = props;
   const router = useRouter();
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-lg-5 mb-3">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3 sticky-top">
       <Link href="/">
         <a className="navbar-brand rabe-logo">RaBe</a>
       </Link>

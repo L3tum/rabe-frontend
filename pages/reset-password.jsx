@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import withBasics from '../components/HOC/withBasics';
 
 class ResetPassword extends React.Component {
@@ -63,7 +64,8 @@ class ResetPassword extends React.Component {
                     Mindestens eine Zahl.
                   </li>
                   <li>
-                    Mindestens ein der folgendenden Sonderzeichen:{' '}
+                    Mindestens eines der folgendenden Sonderzeichen:
+                    {' '}
                     <span className="font-weight-bold">!</span>
                     {', '}
                     <span className="font-weight-bold">@</span>
@@ -88,7 +90,9 @@ class ResetPassword extends React.Component {
                 </div>
               </div>
               <div className="card-footer d-flex justify-content-end">
-                <button type="button" className="btn btn-light mr-3">Zurück</button>
+                <Link href="/login">
+                  <button type="button" className="btn btn-light mr-3">Zurück</button>
+                </Link>
                 <button type="button" className="btn btn-dark" onClick={this.changePassword}>Passwort ändern</button>
               </div>
             </div>

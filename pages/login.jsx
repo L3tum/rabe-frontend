@@ -33,6 +33,7 @@ class Login extends React.Component {
         .then((response) => {
           if (!response.data.passwordGeaendert) {
             props.router.push('/reset-password');
+            return;
           }
           props.router.push('/rooms');
         })
