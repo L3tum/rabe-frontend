@@ -11,6 +11,8 @@ class Rooms extends React.Component {
 
     if (!auth.isAuthenticated) {
       router.push('/');
+    } else if (!auth.passwordChanged) {
+      router.push('/reset-password');
     }
   }
 
@@ -30,6 +32,7 @@ class Rooms extends React.Component {
 Rooms.propTypes = {
   auth: PropTypes.shape({
     isAuthenticated: PropTypes.bool,
+    passwordChanged: PropTypes.bool,
   }),
   router: PropTypes.shape({
     push: PropTypes.func,
@@ -39,6 +42,7 @@ Rooms.propTypes = {
 Rooms.defaultProps = {
   auth: {
     isAuthenticated: false,
+    passwordChanged: false,
   },
   router: {
     push: () => ({}),

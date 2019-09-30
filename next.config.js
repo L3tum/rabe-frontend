@@ -1,5 +1,5 @@
 module.exports = {
-    publicRuntimeConfig: {
-        backend: process.env.BACKEND
-    }
+  publicRuntimeConfig: {
+    backend: process.env.BACKEND,
+  },
 };

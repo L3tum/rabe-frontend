@@ -7,7 +7,7 @@ const defaultState = {
   isAdmin: false,
 };
 
-export const authReducer = (state = defaultState, action) => {
+const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case types.START_AUTHENTICATION:
       return {
@@ -28,7 +28,16 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         isLoading: false,
       };
+    case types.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        passwordChanged: true,
+        isLoading: false,
+      };
+    case types.CHANGE_PASSWORD_FAILED:
     default:
       return state;
   }
 };
+
+export default authReducer;

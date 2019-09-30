@@ -1,6 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
 import withBasics from '../components/HOC/withBasics';
+import * as authActions from '../store/auth/actions';
 
 class ResetPassword extends React.Component {
   constructor(props) {
@@ -10,28 +14,47 @@ class ResetPassword extends React.Component {
 
     this.state = {
       error: '',
+      showPage: false,
     };
   }
 
+  componentDidMount() {
+    const { auth, router } = this.props;
+
+    if (!auth.isAuthenticated) {
+      router.push('/login');
+    } else {
+      this.setState({
+        showPage: true,
+      });
+    }
+  }
+
   changePassword() {
-    const { password, passwordRepeat } = this;
+    const { password, passwordRepeat, oldPassword } = this;
+    const { changePassword } = this.props;
     const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 
     if (password.value !== passwordRepeat.value) {
       this.setState({
         error: 'Passwörter stimmen nicht überein',
       });
-    }
-
-    if (!password.value.match(strongRegex)) {
+    } else if (!password.value.match(strongRegex)) {
       this.setState({
         error: 'Passwort entspricht nicht den Mindestanforderungen',
       });
+    } else {
+      changePassword({ newPassword: password.value, oldPassword: oldPassword.value });
     }
   }
 
   render() {
-    const { error } = this.state;
+    const { error, showPage } = this.state;
+
+    if (!showPage) {
+      return <div />;
+    }
+
     return (
       <div className="container">
         {error.length > 0 && (
@@ -78,6 +101,12 @@ class ResetPassword extends React.Component {
                 </ul>
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
+                    Altes Passwort
+                    <input id="oldPassword" className="form-control" type="password" ref={(oldPassword) => { this.oldPassword = oldPassword; }} />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label className="w-100" htmlFor="password">
                     Neues Passwort
                     <input id="password" className="form-control" type="password" ref={(password) => { this.password = password; }} />
                   </label>
@@ -103,4 +132,32 @@ class ResetPassword extends React.Component {
   }
 }
 
-export default withBasics(ResetPassword, 'RaBe - Passwort Ändern');
+ResetPassword.propTypes = {
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool,
+  }),
+  changePassword: PropTypes.func,
+  router: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+};
+
+ResetPassword.defaultProps = {
+  auth: {
+    isAuthenticated: false,
+  },
+  changePassword: () => ({}),
+  router: {
+    push: PropTypes.func,
+  },
+};
+
+export default connect(
+  (state) => ({
+    auth: state.auth,
+  }),
+  (dispatch) => ({
+    changePassword: (data) => dispatch(authActions.changePassword(data)),
+  }),
+
+)(withBasics(withRouter(ResetPassword), 'RaBe - Passwort Ändern'));

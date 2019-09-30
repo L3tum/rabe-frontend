@@ -1,5 +1,6 @@
 import axios from 'axios';
-import getConfig from "next/config";
+import getConfig from 'next/config';
+
 const { publicRuntimeConfig } = getConfig();
 
 export const types = {
@@ -8,6 +9,8 @@ export const types = {
   AUTHENTICATION_FAILED: '@@AUTH/AUTHENTICATION_FAILED',
   LOGOUT_SUCCESSFUL: '@@AUTH/LOGOUT_SUCCESSFUL',
   LOGOUT_FAILED: '@@AUTH/LOGOUT_FAILED',
+  CHANGE_PASSWORD_SUCCESS: '@@AUTH/CHANGE_PASSWORD_SUCCESS',
+  CHANGE_PASSWORD_FAILED: '@@AUTH/CHANGE_PASSWORD_FAILED',
 };
 
 const startAuthentication = () => ({
@@ -27,16 +30,20 @@ const logoutSuccessful = () => ({
 const logoutFailed = () => ({
   type: types.LOGOUT_FAILED,
 });
+const changePasswordSuccessful = () => ({
+  type: types.CHANGE_PASSWORD_SUCCESS,
+});
+const changePasswordFailed = () => ({
+  type: types.CHANGE_PASSWORD_FAILED,
+});
 
 export const authenticate = (data) => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post(publicRuntimeConfig.backend + '/api/login', data).then((response) => {
-    console.log(response);
+  return axios.post(`${publicRuntimeConfig.backend}/api/login`, data).then((response) => {
     dispatch(authenticationSuccessful(response.data));
     return response;
   }).catch((error) => {
-    console.log(error);
     dispatch(authenticationFailed());
     throw error;
   });
@@ -45,11 +52,23 @@ export const authenticate = (data) => (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch(startAuthentication());
 
-  return axios.post(publicRuntimeConfig.backend + '/api/login/logout').then((response) => {
+  return axios.post(`${publicRuntimeConfig.backend}/api/login/logout`).then((response) => {
     dispatch(logoutSuccessful());
     return response;
   }).catch((error) => {
     dispatch(logoutFailed());
+    throw error;
+  });
+};
+
+export const changePassword = (data) => (dispatch) => {
+  dispatch(startAuthentication());
+
+  return axios.post(`${publicRuntimeConfig.backend}/api/login/changePassword`, data).then((response) => {
+    dispatch(changePasswordSuccessful());
+    return response;
+  }).catch((error) => {
+    dispatch(changePasswordFailed());
     throw error;
   });
 };

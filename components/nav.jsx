@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { logout } from '../store/auth/actions';
 
 const Nav = (props) => {
-  const { auth, logout } = props;
+  const { auth, logoutUser } = props;
   const router = useRouter();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3 sticky-top">
@@ -94,10 +94,10 @@ const Nav = (props) => {
                   Benutzer
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <Link href="/user/reset-password">
+                  <Link href="/reset-password">
                     <a className="dropdown-item">Passwort ändern</a>
                   </Link>
-                  <button type="button" className="dropdown-item" onClick={logout}>Abmelden</button>
+                  <button type="button" className="dropdown-item" onClick={logoutUser}>Abmelden</button>
                 </div>
               </li>
             </ul>
@@ -112,14 +112,14 @@ Nav.propTypes = {
   auth: PropTypes.shape({
     isAuthenticated: PropTypes.bool,
   }),
-  logout: PropTypes.func,
+  logoutUser: PropTypes.func,
 };
 
 Nav.defaultProps = {
   auth: {
     isAuthenticated: false,
   },
-  logout: () => ({}),
+  logoutUser: () => ({}),
 };
 
 export default connect(
@@ -127,6 +127,6 @@ export default connect(
     auth: state.auth,
   }),
   (dispatch) => ({
-    logout: () => dispatch(logout()),
+    logoutUser: () => dispatch(logout()),
   }),
 )(Nav);

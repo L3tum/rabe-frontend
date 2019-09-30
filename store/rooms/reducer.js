@@ -1,5 +1,15 @@
-import types from './actions';
+import { types } from './actions';
 
 const defaultState = {
+  rooms: [],
+};
 
-}
+const roomReducers = (state = defaultState, action) => {
+  switch (action.type) {
+    case types.START_ROOMS_REQUEST:
+    default:
+      return state;
+  }
+};
+
+export default roomReducers;
