@@ -2,7 +2,7 @@ import { types } from './actions';
 
 const defaultState = {
   isLoading: false,
-  isAuthenticated: false,
+  isAuthenticated: true,
   passwordChanged: false,
 };
 

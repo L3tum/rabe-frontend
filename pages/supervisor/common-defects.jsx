@@ -1,17 +1,13 @@
 import React from 'react';
 import withBasics from '../../components/HOC/withBasics';
 
-class Rooms extends React.Component {
-  componentDidMount() {
-
-  }
-
+class CommonDefects extends React.Component {
   render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-            Raum 1
+          <div className="col-12">
+            Häufige Mängel
           </div>
         </div>
       </div>
@@ -19,5 +15,4 @@ class Rooms extends React.Component {
   }
 }
 
-export default withBasics(Rooms, 'RaBe - Admin - Raumverwaltung');
-
+export default withBasics(CommonDefects, 'RaBe - Betreuer - Häufige Mängel');
