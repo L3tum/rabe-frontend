@@ -8,7 +8,7 @@ export const types = {
   LOGOUT_FAILED: '@@AUTH/LOGOUT_FAILED',
   CHANGE_PASSWORD_SUCCESS: '@@AUTH/CHANGE_PASSWORD_SUCCESS',
   CHANGE_PASSWORD_FAILED: '@@AUTH/CHANGE_PASSWORD_FAILED',
-  BLOCK_TEACHER: '@@AUTH/BLOCK_TEACHER_SUCCESS'
+  BLOCK_TEACHER: '@@AUTH/BLOCK_TEACHER_SUCCESS',
 };
 
 const startAuthentication = () => ({
@@ -19,8 +19,9 @@ const authenticationSuccessful = (data) => ({
   type: types.AUTHENTICATION_SUCCESSFUL,
   payload: data,
 });
-const authenticationFailed = () => ({
+const authenticationFailed = (payload) => ({
   type: types.AUTHENTICATION_FAILED,
+  payload,
 });
 const logoutSuccessful = () => ({
   type: types.LOGOUT_SUCCESSFUL,
@@ -45,7 +46,7 @@ export const authenticate = (data) => (dispatch) => {
     dispatch(authenticationSuccessful(response.data));
     return response;
   }).catch((error) => {
-    dispatch(authenticationFailed());
+    dispatch(authenticationFailed(error.response));
     throw error;
   });
 };

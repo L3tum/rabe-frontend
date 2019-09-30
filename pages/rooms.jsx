@@ -10,9 +10,9 @@ class Rooms extends React.Component {
   constructor(props) {
     super(props);
 
-    this.setState({
+    this.state = {
       showPage: false,
-    });
+    };
   }
 
   componentDidMount() {

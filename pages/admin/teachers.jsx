@@ -4,6 +4,7 @@ import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import withBasics from '../../components/HOC/withBasics';
 import Spinner from '../../components/spinner';
+import * as teacherActions from '../../store/teachers/actions';
 
 class Teachers extends React.Component {
   constructor(props) {
@@ -15,7 +16,12 @@ class Teachers extends React.Component {
   }
 
   componentDidMount() {
-    const { auth, router } = this.props;
+    const {
+      auth,
+      router,
+      teachers,
+      getTeachers,
+    } = this.props;
 
     if (!auth.passwordChanged && auth.isAuthenticated) {
       router.push('/reset-password');
@@ -27,11 +33,16 @@ class Teachers extends React.Component {
       this.setState({
         showPage: true,
       });
+
+      if (teachers.data.length === 0) {
+        getTeachers();
+      }
     }
   }
 
   render() {
     const { showPage } = this.state;
+    const { teachers } = this.props;
 
     if (!showPage) {
       return <Spinner />;
@@ -40,9 +51,20 @@ class Teachers extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-            Lehrer 1
-          </div>
+          {teachers.data.forEach((teacher) => (
+            <div className="col-md-6 col-lg-4 mb-3 d-flex justify-content-center">
+              <div className="card" style={{ width: '18rem' }}>
+                <div className="card-img-top bg-dark p-3 d-flex justify-content-center text-white">
+                  <img src="/static/teacher.svg" alt="Lehrer" style={{ width: '80px', height: '80px' }} />
+                </div>
+                <div className="card-body">
+                  <h1 className="card-title">{teacher.name}</h1>
+                  <p className="card-text">{`E-Mail: ${teacher.email}`}</p>
+                  <a href="#" className="btn btn-dark btn-block">Öffnen</a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -58,6 +80,11 @@ Teachers.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func,
   }),
+  teachers: PropTypes.shape({
+    isLoading: PropTypes.bool,
+    data: PropTypes.array,
+  }),
+  getTeachers: PropTypes.func,
 };
 
 Teachers.defaultProps = {
@@ -66,13 +93,22 @@ Teachers.defaultProps = {
     isAdmin: false,
     passwordChanged: false,
   },
+  teachers: {
+    isLoading: false,
+    data: [],
+  },
   router: {
     push: () => ({}),
   },
+  getTeachers: () => ({}),
 };
 
 export default connect(
   (state) => ({
     auth: state.auth,
+    teachers: state.teachers,
+  }),
+  (dispatch) => ({
+    getTeachers: () => dispatch(teacherActions.getTeachers()),
   }),
 )(withBasics(withRouter(Teachers), 'RaBe - Admin - Lehrerverwaltung'));
