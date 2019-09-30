@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { logout } from '../store/auth/actions';
 
 const Nav = (props) => {
-  const { auth } = props;
+  const { auth, logout } = props;
   const router = useRouter();
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-lg-5 mb-2">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-lg-5 mb-3">
       <Link href="/">
         <a className="navbar-brand rabe-logo">RaBe</a>
       </Link>
@@ -96,9 +97,7 @@ const Nav = (props) => {
                   <Link href="/user/reset-password">
                     <a className="dropdown-item">Passwort ändern</a>
                   </Link>
-                  <Link href="/user/logout">
-                    <a className="dropdown-item">Abmelden</a>
-                  </Link>
+                  <button type="button" className="dropdown-item" onClick={logout}>Abmelden</button>
                 </div>
               </li>
             </ul>
@@ -113,16 +112,21 @@ Nav.propTypes = {
   auth: PropTypes.shape({
     isAuthenticated: PropTypes.bool,
   }),
+  logout: PropTypes.func,
 };
 
 Nav.defaultProps = {
   auth: {
     isAuthenticated: false,
   },
+  logout: () => ({}),
 };
 
 export default connect(
   (state) => ({
     auth: state.auth,
+  }),
+  (dispatch) => ({
+    logout: () => dispatch(logout()),
   }),
 )(Nav);

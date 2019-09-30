@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'next/router';
+
 import withBasics from '../components/HOC/withBasics';
 import { authenticate } from '../store/auth/actions';
 
@@ -12,6 +14,7 @@ class Login extends React.Component {
 
     this.state = {
       error: '',
+      wrongPassword: 0,
     };
   }
 
@@ -24,12 +27,22 @@ class Login extends React.Component {
         email: this.email.value,
         password: this.password.value,
       };
+      const { wrongPassword } = this.state;
 
       props.authenticate(data)
-        .then(() => {
-          console.log('Logged In');
+        .then((response) => {
+          if (!response.data.passwordGeaendert) {
+            props.router.push('/reset-password');
+          }
+          props.router.push('/rooms');
         })
-        .catch(() => {
+        .catch((error) => {
+          if (error.response.code === 401) {
+            this.setState({
+              wrongPassword: wrongPassword + 1,
+              error: 'Benutzerdaten falsch',
+            });
+          }
           this.setState({
             error: 'Beim Anmelden ist ein Fehler aufgetretten.',
           });
@@ -116,12 +129,18 @@ Login.propTypes = {
   auth: PropTypes.shape({
     isLoading: PropTypes.bool,
   }),
+  router: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 Login.defaultProps = {
   authenticate: () => ({}),
   auth: {
     isLoading: false,
+  },
+  router: {
+    push: () => ({}),
   },
 };
 
@@ -130,6 +149,6 @@ export default connect(
     auth: state.auth,
   }),
   (dispatch) => ({
-    authenticate: (data) => dispatch(authenticate(data)),
+    authenticate: (data) => dispatch(authenticate(data))
   }),
-)(withBasics(Login, 'RaBe - Login'));
+)(withBasics(withRouter(Login), 'RaBe - Login'));
