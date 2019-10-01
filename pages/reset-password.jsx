@@ -20,15 +20,9 @@ class ResetPassword extends React.Component {
   }
 
   componentDidMount() {
-    const { auth, router } = this.props;
-
-    if (!auth.isAuthenticated) {
-      router.push('/login');
-    } else {
-      this.setState({
-        showPage: true,
-      });
-    }
+    this.setState({
+      showPage: true,
+    });
   }
 
   changePassword() {
@@ -69,7 +63,7 @@ class ResetPassword extends React.Component {
     const { error, showPage } = this.state;
 
     if (!showPage) {
-      return <Spinner />;
+      return <Spinner/>;
     }
 
     return (
@@ -119,19 +113,25 @@ class ResetPassword extends React.Component {
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
                     Altes Passwort
-                    <input id="oldPassword" className="form-control" type="password" ref={(oldPassword) => { this.oldPassword = oldPassword; }} />
+                    <input id="oldPassword" className="form-control" type="password" ref={(oldPassword) => {
+                      this.oldPassword = oldPassword;
+                    }}/>
                   </label>
                 </div>
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
                     Neues Passwort
-                    <input id="password" className="form-control" type="password" ref={(password) => { this.password = password; }} />
+                    <input id="password" className="form-control" type="password" ref={(password) => {
+                      this.password = password;
+                    }}/>
                   </label>
                 </div>
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
                     Neues Passwort wiederholen
-                    <input id="password_repeat" className="form-control" type="password" ref={(passwordRepeat) => { this.passwordRepeat = passwordRepeat; }} />
+                    <input id="password_repeat" className="form-control" type="password" ref={(passwordRepeat) => {
+                      this.passwordRepeat = passwordRepeat;
+                    }}/>
                   </label>
                 </div>
               </div>
@@ -176,5 +176,4 @@ export default connect(
   (dispatch) => ({
     changePassword: (data) => dispatch(authActions.changePassword(data)),
   }),
-
 )(withBasics(withRouter(ResetPassword), 'RaBe - Passwort Ändern'));

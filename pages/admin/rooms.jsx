@@ -16,26 +16,16 @@ class Rooms extends React.Component {
 
 
   componentDidMount() {
-    const { auth, router } = this.props;
-
-    if (!auth.passwordChanged && auth.isAuthenticated) {
-      router.push('/reset-password');
-    } else if (!auth.isAdmin && auth.isAuthenticated) {
-      router.push('/rooms');
-    } else if (!auth.isAuthenticated) {
-      router.push('/login');
-    } else {
-      this.setState({
-        showPage: true,
-      });
-    }
+    this.setState({
+      showPage: true,
+    });
   }
 
   render() {
     const { showPage } = this.state;
 
     if (!showPage) {
-      return <Spinner />;
+      return <Spinner/>;
     }
 
     return (

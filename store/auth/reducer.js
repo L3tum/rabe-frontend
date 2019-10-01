@@ -1,4 +1,5 @@
 import { types } from './actions';
+import { removeCookie, setCookie } from '../../components/cookie';
 
 const defaultState = {
   isLoading: false,
@@ -11,13 +12,21 @@ const defaultState = {
 
 const authReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case types.REAUTHENTICATION_SUCCESSFUL: {
+      setCookie('auth', `${JSON.stringify(action.payload)}`);
+
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     case types.START_AUTHENTICATION:
       return {
         ...state,
         isLoading: true,
       };
     case types.AUTHENTICATION_SUCCESSFUL:
-      document.cookie = `token=${action.payload.token}; max-age=60*60*24; path=/; domain=${window.location.origin}`;
+      setCookie('auth', `${JSON.stringify(action.payload)}`);
 
       return {
         ...state,
@@ -29,7 +38,7 @@ const authReducer = (state = defaultState, action) => {
         token: action.payload.token,
       };
     case types.CHANGE_PASSWORD_SUCCESS:
-      document.cookie = 'token=; Max-Age=-99999999;';
+      setCookie('auth', `${JSON.stringify(state.auth)}`);
 
       return {
         ...state,
@@ -41,16 +50,19 @@ const authReducer = (state = defaultState, action) => {
         ...state,
         isBlocked: true,
       };
+    case types.REAUTHENTICATION_FAILED:
     case types.AUTHENTICATION_FAILED:
+      removeCookie('auth');
+
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
-        isBlocked: !!action.payload.blocked,
+        isBlocked: action.payload ? !!action.payload.blocked : false,
         token: null,
       };
     case types.LOGOUT_SUCCESSFUL:
-      document.cookie = 'token=; Max-Age=-99999999;';
+      removeCookie('auth');
 
       return defaultState;
     case types.LOGOUT_FAILED:

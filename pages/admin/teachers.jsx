@@ -17,26 +17,16 @@ class Teachers extends React.Component {
 
   componentDidMount() {
     const {
-      auth,
-      router,
       teachers,
       getTeachers,
     } = this.props;
 
-    if (!auth.passwordChanged && auth.isAuthenticated) {
-      router.push('/reset-password');
-    } else if (!auth.isAdmin && auth.isAuthenticated) {
-      router.push('/rooms');
-    } else if (!auth.isAuthenticated) {
-      router.push('/login');
-    } else {
-      this.setState({
-        showPage: true,
-      });
+    this.setState({
+      showPage: true,
+    });
 
-      if (teachers.data.length === 0) {
-        getTeachers();
-      }
+    if (teachers.data.length === 0) {
+      getTeachers();
     }
   }
 
@@ -45,7 +35,7 @@ class Teachers extends React.Component {
     const { teachers } = this.props;
 
     if (!showPage) {
-      return <Spinner />;
+      return <Spinner/>;
     }
 
     return (
@@ -55,7 +45,7 @@ class Teachers extends React.Component {
             <div className="col-md-6 col-lg-4 mb-3 d-flex justify-content-center">
               <div className="card" style={{ width: '18rem' }}>
                 <div className="card-img-top bg-dark p-3 d-flex justify-content-center text-white">
-                  <img src="/static/teacher.svg" alt="Lehrer" style={{ width: '80px', height: '80px' }} />
+                  <img src="/static/teacher.svg" alt="Lehrer" style={{ width: '80px', height: '80px' }}/>
                 </div>
                 <div className="card-body">
                   <h1 className="card-title">{teacher.name}</h1>

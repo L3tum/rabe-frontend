@@ -15,7 +15,6 @@ class Index extends React.Component {
     };
   }
 
-
   componentDidMount() {
     const { auth, router } = this.props;
 
@@ -32,7 +31,7 @@ class Index extends React.Component {
     const { showPage } = this.state;
 
     if (!showPage) {
-      return <Spinner />;
+      return <Spinner/>;
     }
 
     return (
@@ -41,19 +40,19 @@ class Index extends React.Component {
           <div className="col-12">
             <p className="display-4 text-center text-muted mt-5">
               Willkommen zum Raum-Betreuungs Tool
-              <br />
+              <br/>
               <span className="display-2 font-weight-bolder text-dark rabe-logo">
               RaBe
               </span>
             </p>
             <div className="text-center">
-              <img src="/static/favicon.ico" />
+              <img src="/static/favicon.ico"/>
             </div>
             <h5 className="text-center text-muted mt-3">
               Mit diesem Tool können Sie Probleme an Arbeitsplätzen in Räumen verwalten.
-              <br />
+              <br/>
               Sie können bestehende Fehler einsehen und neue Fehler eintragen.
-              <br />
+              <br/>
               Diese Fehler werden dann an den entsprechenden Betreuer weitergeleitet
             </h5>
             <div className="row justify-content-center mt-3">

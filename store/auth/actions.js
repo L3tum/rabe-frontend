@@ -9,6 +9,8 @@ export const types = {
   CHANGE_PASSWORD_SUCCESS: '@@AUTH/CHANGE_PASSWORD_SUCCESS',
   CHANGE_PASSWORD_FAILED: '@@AUTH/CHANGE_PASSWORD_FAILED',
   BLOCK_TEACHER: '@@AUTH/BLOCK_TEACHER_SUCCESS',
+  REAUTHENTICATION_SUCCESSFUL: '@@AUTH/REAUTHENTICATION_SUCCESSFUL',
+  REAUTHENTICATION_FAILED: '@@AUTH/REAUTHENTICATION_FAILED',
 };
 
 const startAuthentication = () => ({
@@ -22,6 +24,14 @@ const authenticationSuccessful = (data) => ({
 const authenticationFailed = (payload) => ({
   type: types.AUTHENTICATION_FAILED,
   payload,
+});
+const reauthenticationSuccessful = (data) => ({
+  type: types.REAUTHENTICATION_SUCCESSFUL,
+  payload: data,
+});
+const reauthenticationFailed = (data) => ({
+  type: types.REAUTHENTICATION_FAILED,
+  payload: data,
 });
 const logoutSuccessful = () => ({
   type: types.LOGOUT_SUCCESSFUL,
@@ -51,10 +61,22 @@ export const authenticate = (data) => (dispatch) => {
   });
 };
 
+export const reauthenticate = (auth) => {
+  return (dispatch) => {
+    if (auth) {
+      dispatch(reauthenticationSuccessful(auth));
+
+      return;
+    }
+
+    dispatch(reauthenticationFailed());
+  };
+};
+
 export const logout = () => (dispatch, getState) => {
   dispatch(startAuthentication());
 
-  return axios.post(`${process.env.BACKEND}/api/login/logout`, { headers: { Authorization: `Bearer ${getState().auth.token}` }}).then((response) => {
+  return axios.post(`${process.env.BACKEND}/api/login/logout`, { headers: { Authorization: `Bearer ${getState().auth.token}` } }).then((response) => {
     dispatch(logoutSuccessful());
     return response;
   }).catch((error) => {
@@ -68,7 +90,7 @@ export const changePassword = (data) => (dispatch, getState) => {
 
   console.log(getState());
 
-  return axios.post(`${process.env.BACKEND}/api/login/changePassword`, data, { headers: { Authorization: `Bearer ${getState().auth.token}` }}).then((response) => {
+  return axios.post(`${process.env.BACKEND}/api/login/changePassword`, data, { headers: { Authorization: `Bearer ${getState().auth.token}` } }).then((response) => {
     dispatch(changePasswordSuccessful());
     return response;
   }).catch((error) => {
@@ -78,5 +100,5 @@ export const changePassword = (data) => (dispatch, getState) => {
 };
 
 export const blockTeacher = () => (dispatch) => {
-    dispatch(blockTeacherAction());
+  dispatch(blockTeacherAction());
 };

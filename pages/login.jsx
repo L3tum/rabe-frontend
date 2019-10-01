@@ -21,15 +21,11 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    const { auth, router } = this.props;
+    const { auth } = this.props;
 
-    if (auth.isAuthenticated) {
-      router.push('/rooms');
-    } else {
-      this.setState({
-        showPage: true,
-      });
-    }
+    this.setState({
+      showPage: true,
+    });
     if (auth.isBlocked) {
       this.setState({
         error: 'Ihr Account wurde auf Grund zu vieler fehlgeschlagener Login Versuche gesperrt. Bitte wenden Sie einen Administrator',
@@ -75,7 +71,8 @@ class Login extends React.Component {
                 error: 'Benutzerdaten falsch.',
               });
             }
-          } if (error.response.status === 404) {
+          }
+          if (error.response.status === 404) {
             this.setState({
               error: 'Benutzerdaten falsch.',
             });
@@ -97,7 +94,7 @@ class Login extends React.Component {
     const { error, showPage } = this.state;
 
     if (!showPage) {
-      return <Spinner />;
+      return <Spinner/>;
     }
 
     return (
@@ -115,16 +112,18 @@ class Login extends React.Component {
           <div className="col-lg-6 col-md-8 col-sm-12">
             <div className="card">
               <div className="card-header bg-dark text-white">
-                  Anmelden
+                Anmelden
               </div>
               <div className="card-body">
                 <div className="form-group">
                   <label className="w-100" htmlFor="email">
-                        E-Mail
+                    E-Mail
                     <input
                       id="email"
                       className="form-control"
-                      ref={(email) => { this.email = email; }}
+                      ref={(email) => {
+                        this.email = email;
+                      }}
                       onKeyPress={(event) => {
                         if (event.key === 'Enter') {
                           this.login();
@@ -136,12 +135,14 @@ class Login extends React.Component {
                 </div>
                 <div className="form-group">
                   <label className="w-100" htmlFor="password">
-                        Passwort
+                    Passwort
                     <input
                       id="password"
                       className="form-control"
                       type="password"
-                      ref={(password) => { this.password = password; }}
+                      ref={(password) => {
+                        this.password = password;
+                      }}
                       onKeyPress={(event) => {
                         if (event.key === 'Enter') {
                           this.login();
@@ -169,6 +170,7 @@ class Login extends React.Component {
     );
   }
 }
+
 Login.propTypes = {
   authenticate: PropTypes.func,
   auth: PropTypes.shape({
