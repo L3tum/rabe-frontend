@@ -22,7 +22,7 @@ const getRoomsFail = () => ({
 export const getRooms = () => (dispatch, getState) => {
   dispatch(startRoomsRequest());
 
-  axios.get('/api/rooms', { headers: { Authorization: `Bearer ${getState().auth.token}` }}).then((response) => {
+  axios.get(`${process.env.BACKEND}/api/room`, { headers: { Authorization: `Bearer ${getState().auth.token}` } }).then((response) => {
     dispatch(getRoomsSuccess(response.data.data));
     return response;
   }).catch((error) => {
