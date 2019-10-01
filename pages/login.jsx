@@ -28,7 +28,7 @@ class Login extends React.Component {
     });
     if (auth.isBlocked) {
       this.setState({
-        error: 'Ihr Account wurde auf Grund zu vieler fehlgeschlagener Login Versuche gesperrt. Bitte wenden Sie einen Administrator',
+        error: 'Ihr Account wurde auf Grund zu vieler fehlgeschlagener Login Versuche gesperrt. Bitte wenden Sie sich an einen Administrator',
       });
     }
   }

@@ -79,7 +79,7 @@ const Nav = (props) => {
                     Administration
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <Link href="/admin/teachers">
+                    <Link href="/admin/teacher">
                       <a className="dropdown-item">Lehrerverwaltung</a>
                     </Link>
                     <Link href="/admin/rooms">

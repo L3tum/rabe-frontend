@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
-import withBasics from '../../components/HOC/withBasics';
-import Spinner from '../../components/spinner';
-import * as teacherActions from '../../store/teachers/actions';
+import withBasics from '../../../components/HOC/withBasics';
+import Spinner from '../../../components/spinner';
+import * as teacherActions from '../../../store/teachers/actions';
 
-class Teachers extends React.Component {
+class Teacher extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,12 +22,17 @@ class Teachers extends React.Component {
       getTeachers,
     } = this.props;
 
-    this.setState({
-      showPage: true,
-    });
-
     if (teachers.data.length === 0) {
-      getTeachers();
+      getTeachers()
+        .then(() => {
+          this.setState({
+            showPage: true,
+          });
+        });
+    } else {
+      this.setState({
+        showPage: true,
+      });
     }
   }
 
@@ -41,16 +47,31 @@ class Teachers extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          {teachers.data.forEach((teacher) => (
-            <div className="col-md-6 col-lg-4 mb-3 d-flex justify-content-center">
-              <div className="card" style={{ width: '18rem' }}>
+          <div className="col-md-6 col-lg-4 mb-3 d-flex justify-content-center">
+            <div className="card w-100">
+              <div className="card-img-top bg-dark p-3 d-flex justify-content-center text-white">
+                <img src="/static/add.svg" alt="Hinzufügen" style={{ width: '80px', height: '80px' }} />
+              </div>
+              <div className="card-body d-flex align-items-start flex-column">
+                <h1 className="card-title">Lehrer hinzufügen</h1>
+                <Link href="/admin/teacher/create">
+                  <button type="button" className="btn btn-dark btn-block mt-auto">Hinzufügen</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+          {teachers.data.map((teacher) => (
+            <div key={`Teacher-${teacher.id}`} className="col-md-6 col-lg-4 mb-3 d-flex justify-content-center">
+              <div className="card w-100">
                 <div className="card-img-top bg-dark p-3 d-flex justify-content-center text-white">
                   <img src="/static/teacher.svg" alt="Lehrer" style={{ width: '80px', height: '80px' }}/>
                 </div>
-                <div className="card-body">
+                <div className="card-body d-flex align-items-start flex-column">
                   <h1 className="card-title">{teacher.name}</h1>
                   <p className="card-text">{`E-Mail: ${teacher.email}`}</p>
-                  <a href="#" className="btn btn-dark btn-block">Öffnen</a>
+                  <Link href="/admin/teacher/[id]" as={`/admin/teacher/${teacher.id}`}>
+                    <button type="button" className="btn btn-dark btn-block mt-auto">Öffnen</button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -61,7 +82,7 @@ class Teachers extends React.Component {
   }
 }
 
-Teachers.propTypes = {
+Teacher.propTypes = {
   auth: PropTypes.shape({
     isAuthenticated: PropTypes.bool,
     isAdmin: PropTypes.bool,
@@ -77,7 +98,7 @@ Teachers.propTypes = {
   getTeachers: PropTypes.func,
 };
 
-Teachers.defaultProps = {
+Teacher.defaultProps = {
   auth: {
     isAuthenticated: false,
     isAdmin: false,
@@ -101,4 +122,4 @@ export default connect(
   (dispatch) => ({
     getTeachers: () => dispatch(teacherActions.getTeachers()),
   }),
-)(withBasics(withRouter(Teachers), 'RaBe - Admin - Lehrerverwaltung'));
+)(withBasics(withRouter(Teacher), 'RaBe - Admin - Lehrerverwaltung'));
