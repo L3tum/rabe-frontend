@@ -6,7 +6,7 @@ const defaultState = {
   passwordChanged: false,
   isAdmin: false,
   isBlocked: false,
-  token: null
+  token: null,
 };
 
 const authReducer = (state = defaultState, action) => {
@@ -17,6 +17,8 @@ const authReducer = (state = defaultState, action) => {
         isLoading: true,
       };
     case types.AUTHENTICATION_SUCCESSFUL:
+      document.cookie = `token=${action.payload.token}; max-age=60*60*24; path=/; domain=${window.location.origin}`;
+
       return {
         ...state,
         isAuthenticated: true,
@@ -24,9 +26,11 @@ const authReducer = (state = defaultState, action) => {
         passwordChanged: !!action.payload.passwordGeaendert,
         isAdmin: !!action.payload.administrator,
         isBlocked: !!action.payload.blocked,
-        token: action.payload.token
+        token: action.payload.token,
       };
     case types.CHANGE_PASSWORD_SUCCESS:
+      document.cookie = 'token=; Max-Age=-99999999;';
+
       return {
         ...state,
         passwordChanged: true,
@@ -43,8 +47,11 @@ const authReducer = (state = defaultState, action) => {
         isAuthenticated: false,
         isLoading: false,
         isBlocked: !!action.payload.blocked,
+        token: null,
       };
     case types.LOGOUT_SUCCESSFUL:
+      document.cookie = 'token=; Max-Age=-99999999;';
+
       return defaultState;
     case types.LOGOUT_FAILED:
       return {
